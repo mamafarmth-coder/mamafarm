@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mama Farm — บันทึกประจำวัน</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:   #213526;
+  --gold:    #C88E2A;
+  --cream:   #ECC98D;
+  --black:   #21201E;
+  --offwhite:#F0EAD8;
+  --white:   #FFFFFF;
+  --red:     #C0392B;
+  --radius:  12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Courier Prime', 'Sarabun', monospace;
+  background: var(--offwhite);
+  color: var(--black);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: var(--green);
+  padding: 20px 20px 16px;
+  text-align: center;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.logo-text {
+  font-size: 32px; font-weight: 700;
+  color: var(--gold); letter-spacing: 1px;
+  line-height: 1;
+}
+.logo-text span { color: var(--cream); }
+.coop-badge {
+  display: inline-block; margin-top: 6px;
+  background: var(--gold); color: var(--green);
+  font-size: 13px; font-weight: 700;
+  padding: 4px 16px; border-radius: 20px;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.tagline {
+  font-size: 11px; color: var(--cream);
+  opacity: 0.7; margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* ─── FORM BODY ─── */
+.form-body { padding: 16px; max-width: 480px; margin: 0 auto; }
+
+/* ─── SECTION ─── */
+.section {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(33,53,38,0.08);
+}
+.section-header {
+  background: var(--green);
+  color: var(--cream);
+  padding: 10px 16px;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-body { padding: 14px 16px; }
+
+/* ─── FIELD ─── */
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.field label {
+  display: block;
+  font-size: 12px; font-weight: 700;
+  color: var(--green); margin-bottom: 5px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+.field .hint {
+  font-size: 11px; color: #888;
+  margin-bottom: 5px; font-weight: 400;
+  text-transform: none; letter-spacing: 0;
+}
+.required { color: var(--red); }
+
+/* inputs */
+input[type="number"], input[type="text"],
+input[type="date"], textarea, select {
+  width: 100%; padding: 10px 12px;
+  border: 2px solid #E0D8C8;
+  border-radius: 8px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 16px; color: var(--black);
+  background: var(--offwhite);
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none; border-color: var(--gold);
+  background: #FFFEF8;
+}
+input[type="date"] { font-size: 15px; }
+textarea { resize: vertical; min-height: 72px; }
+
+/* ─── PAIR INPUTS (ถาด / ฟอง) ─── */
+.pair-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.pair-label {
+  font-size: 11px; color: #999;
+  text-align: center; margin-top: 3px;
+  text-transform: none; letter-spacing: 0;
+}
+.pair-total {
+  text-align: center; font-size: 12px;
+  color: var(--green); font-weight: 700;
+  margin-top: 4px; padding: 4px 8px;
+  background: #F0EAD8; border-radius: 6px;
+}
+
+/* ─── HALF ROW ─── */
+.half-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+/* ─── CHECKBOX ─── */
+.check-item {
+  display: flex; align-items: flex-start;
+  gap: 10px; padding: 10px 0;
+  border-bottom: 1px solid #F0EAD8;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item input[type="checkbox"] {
+  width: 20px; height: 20px; min-width: 20px;
+  accent-color: var(--gold);
+  cursor: pointer; margin-top: 2px;
+}
+.check-label {
+  font-size: 14px; color: var(--black);
+  font-weight: 700; line-height: 1.3;
+  cursor: pointer;
+}
+.check-desc {
+  font-size: 12px; color: #888; font-weight: 400;
+  margin-top: 2px;
+}
+.note-field {
+  margin-top: 8px; display: none;
+  animation: slideDown 0.2s ease;
+}
+.note-field.show { display: block; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.note-input {
+  width: 100%; padding: 8px 10px;
+  border: 2px solid var(--gold);
+  border-radius: 6px; font-size: 14px;
+  font-family: 'Courier Prime', monospace;
+  background: #FFFEF8;
+}
+
+/* ─── SELL CHICKEN (conditional) ─── */
+.sell-section { display: none; padding: 0 0 4px; }
+.sell-section.show { display: block; }
+
+/* ─── EGG SIZE GRID ─── */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.size-card {
+  background: var(--offwhite);
+  border-radius: 8px; padding: 8px 6px;
+  text-align: center;
+  border: 1px solid #E0D8C8;
+}
+.size-badge {
+  font-size: 11px; font-weight: 700;
+  color: var(--green); letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.size-inputs { display: flex; gap: 4px; }
+.size-inputs input {
+  width: 100%; padding: 6px 4px;
+  font-size: 14px; text-align: center;
+  border-radius: 6px;
+}
+.size-sublabel {
+  font-size: 9px; color: #aaa;
+  text-align: center; margin-top: 2px;
+}
+
+/* ─── FOOD COST DISPLAY ─── */
+.cost-display {
+  background: var(--green);
+  border-radius: 8px; padding: 10px 14px;
+  margin-top: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cost-label { font-size: 11px; color: var(--cream); letter-spacing: 1px; }
+.cost-value { font-size: 18px; font-weight: 700; color: var(--gold); }
+
+/* ─── LRI PREVIEW ─── */
+.lri-display {
+  background: var(--black);
+  border-radius: 8px; padding: 10px 14px;
+  margin-top: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.lri-label { font-size: 11px; color: var(--cream); letter-spacing: 1px; }
+.lri-value { font-size: 22px; font-weight: 700; }
+.lri-good { color: #5CB85C; }
+.lri-warn { color: var(--gold); }
+.lri-bad  { color: var(--red); }
+
+/* ─── SUBMIT ─── */
+.submit-btn {
+  width: 100%; padding: 16px;
+  background: var(--gold);
+  color: var(--green);
+  border: none; border-radius: var(--radius);
+  font-family: 'Courier Prime', monospace;
+  font-size: 17px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(200,142,42,0.4);
+  transition: all 0.2s;
+}
+.submit-btn:hover { background: #B07E20; transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
+.submit-btn:disabled { background: #ccc; color: #888; cursor: not-allowed; box-shadow: none; }
+
+/* ─── LOADING ─── */
+.loading { display: none; text-align: center; padding: 12px; color: var(--green); font-size: 15px; }
+.loading.show { display: block; }
+
+/* ─── SUCCESS ─── */
+.success-screen {
+  display: none; text-align: center;
+  padding: 60px 20px;
+}
+.success-screen.show { display: block; }
+.success-icon { font-size: 64px; margin-bottom: 16px; }
+.success-title {
+  font-size: 24px; font-weight: 700;
+  color: var(--green); margin-bottom: 8px;
+}
+.success-sub { font-size: 14px; color: #666; line-height: 1.8; }
+.back-btn {
+  margin-top: 24px; padding: 12px 28px;
+  background: var(--green); color: var(--gold);
+  border: none; border-radius: 8px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 1px;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center; padding: 20px;
+  font-size: 11px; color: #aaa; letter-spacing: 1px;
+}
+
+/* ════════════════════════════════════════
+   MODAL REVIEW
+════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(33,53,38,0.7);
+  backdrop-filter: blur(3px);
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+
+.modal-card {
+  background: var(--white);
+  width: 100%; max-width: 480px;
+  border-radius: 20px 20px 0 0;
+  max-height: 88vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.modal-header {
+  background: var(--green);
+  padding: 16px 20px 14px;
+  border-radius: 20px 20px 0 0;
+  position: sticky; top: 0; z-index: 10;
+}
+.modal-title {
+  font-size: 16px; font-weight: 700;
+  color: var(--gold); letter-spacing: 1px;
+}
+.modal-subtitle {
+  font-size: 12px; color: var(--cream);
+  opacity: 0.8; margin-top: 2px;
+}
+
+.modal-body { padding: 16px 20px; }
+
+/* review row */
+.review-section {
+  margin-bottom: 14px;
+  border-bottom: 1px solid #F0EAD8;
+  padding-bottom: 12px;
+}
+.review-section:last-child { border-bottom: none; margin-bottom: 0; }
+.review-section-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--green); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.review-row {
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 8px;
+  padding: 3px 0;
+}
+.review-key {
+  font-size: 13px; color: #888; flex-shrink: 0;
+}
+.review-val {
+  font-size: 14px; font-weight: 700;
+  color: var(--black); text-align: right;
+}
+.review-val.highlight {
+  color: var(--green); font-size: 16px;
+}
+.review-val.gold { color: var(--gold); }
+.review-val.green { color: #3a7a3a; }
+.review-val.red { color: var(--red); }
+
+/* LRI badge in modal */
+.lri-badge {
+  display: inline-block; padding: 4px 12px;
+  border-radius: 20px; font-weight: 700; font-size: 18px;
+}
+.lri-badge.good { background: #e8f5e9; color: #2e7d32; }
+.lri-badge.warn { background: #fff8e1; color: #f57f17; }
+.lri-badge.bad  { background: #ffebee; color: #c62828; }
+
+/* event tags */
+.event-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.event-tag {
+  background: var(--offwhite); border: 1px solid var(--cream);
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 12px; color: var(--black);
+}
+
+/* modal footer buttons */
+.modal-footer {
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 10px; padding: 14px 20px 24px;
+  border-top: 1px solid #F0EAD8;
+  position: sticky; bottom: 0;
+  background: var(--white);
+}
+.btn-edit {
+  padding: 14px;
+  background: var(--offwhite); color: var(--black);
+  border: 2px solid #E0D8C8; border-radius: 10px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 1px;
+}
+.btn-confirm {
+  padding: 14px;
+  background: var(--green); color: var(--gold);
+  border: none; border-radius: 10px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(33,53,38,0.3);
+}
+.btn-confirm:disabled {
+  background: #aaa; color: #fff; cursor: not-allowed; box-shadow: none;
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<div class="header">
+  <div class="logo-text">Mama<span>Farm</span></div>
+  <div class="coop-badge" id="coop-badge">คอก —</div>
+  <div class="tagline">HAPPY HENS. HONEST EGGS.</div>
+</div>
+
+<!-- ════ SUCCESS SCREEN ════ -->
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">🥚</div>
+  <div class="success-title">บันทึกสำเร็จ!</div>
+  <div class="success-sub" id="success-detail"></div>
+  <button class="back-btn" onclick="resetForm()">+ บันทึกใหม่</button>
+</div>
+
+<!-- ════ MAIN FORM ════ -->
+<div class="form-body" id="main-form">
+
+  <!-- ── 1. ข้อมูลวันนี้ ── -->
+  <div class="section">
+    <div class="section-header">📅 ข้อมูลวันนี้</div>
+    <div class="section-body">
+      <div class="field">
+        <label>วันที่บันทึก <span class="required">*</span></label>
+        <input type="date" id="f-date" required>
+      </div>
+      <div class="half-row">
+        <div class="field">
+          <label>ไก่ตายวันนี้ (ตัว) <span class="required">*</span></label>
+          <div class="hint">ถ้าไม่มีตาย ใส่ 0</div>
+          <input type="number" id="f-dead" min="0" value="0" required oninput="updateCount()">
+        </div>
+        <div class="field">
+          <label>ไก่ในคอกปัจจุบัน</label>
+          <input type="number" id="f-current-count" readonly
+            style="background:#E8E0D0;color:#888;cursor:not-allowed;">
+        </div>
+      </div>
+
+      <!-- ขายไก่ออก -->
+      <div class="check-item">
+        <input type="checkbox" id="chk-sell" onchange="toggleSell()">
+        <div>
+          <div class="check-label" onclick="document.getElementById('chk-sell').click()">
+            💰 ขายไก่ออก
+          </div>
+          <div class="check-desc">ติ๊กถ้ามีการขายไก่วันนี้</div>
+        </div>
+      </div>
+      <div class="sell-section" id="sell-section">
+        <div class="field" style="margin-top:8px">
+          <label>จำนวนที่ขายออก (ตัว)</label>
+          <input type="number" id="f-sold" min="0" placeholder="0" oninput="updateCount()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. อาหารไก่ ── -->
+  <div class="section">
+    <div class="section-header">🌾 อาหารไก่วันนี้</div>
+    <div class="section-body">
+      <div class="half-row">
+        <div class="field">
+          <label>อาหารเช้า (kg) <span class="required">*</span></label>
+          <input type="number" id="f-food-am" step="0.5" min="0"
+            placeholder="0" required oninput="calcFoodCost()">
+        </div>
+        <div class="field">
+          <label>อาหารเย็น (kg) <span class="required">*</span></label>
+          <input type="number" id="f-food-pm" step="0.5" min="0"
+            placeholder="0" required oninput="calcFoodCost()">
+        </div>
+      </div>
+      <div class="field">
+        <label>ราคาอาหาร (บาท/kg)</label>
+        <div class="hint">ค่าปกติ 15.67 บาท/kg (470÷30) — แก้ได้ถ้าราคาเปลี่ยน</div>
+        <input type="number" id="f-food-price" step="0.01"
+          value="15.67" oninput="calcFoodCost()">
+      </div>
+      <div class="cost-display">
+        <div class="cost-label">ต้นทุนอาหารวันนี้</div>
+        <div class="cost-value" id="cost-display">฿ 0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. ไข่ที่เก็บได้ ── -->
+  <div class="section">
+    <div class="section-header">🥚 ไข่ที่เก็บได้</div>
+    <div class="section-body">
+      <div class="field">
+        <label>ไข่เช้า <span class="required">*</span></label>
+        <div class="pair-row">
+          <div>
+            <input type="number" id="f-egg-am-tray" min="0" placeholder="0" oninput="calcEggs()">
+            <div class="pair-label">ถาด</div>
+          </div>
+          <div>
+            <input type="number" id="f-egg-am-egg" min="0" max="29" placeholder="0" oninput="calcEggs()">
+            <div class="pair-label">ฟอง (0-29)</div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>ไข่เย็น <span class="required">*</span></label>
+        <div class="pair-row">
+          <div>
+            <input type="number" id="f-egg-pm-tray" min="0" placeholder="0" oninput="calcEggs()">
+            <div class="pair-label">ถาด</div>
+          </div>
+          <div>
+            <input type="number" id="f-egg-pm-egg" min="0" max="29" placeholder="0" oninput="calcEggs()">
+            <div class="pair-label">ฟอง (0-29)</div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>ฟองแตก / ร้าว (ฟอง)</label>
+        <input type="number" id="f-broken" min="0" value="0" oninput="calcEggs()">
+      </div>
+      <!-- LRI Preview -->
+      <div class="lri-display">
+        <div>
+          <div class="lri-label">LRI วันนี้</div>
+          <div style="font-size:11px;color:#888;margin-top:2px" id="lri-detail">—</div>
+        </div>
+        <div class="lri-value" id="lri-display">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. เบอร์ไข่ ── -->
+  <div class="section">
+    <div class="section-header">📦 เบอร์ไข่วันนี้</div>
+    <div class="section-body">
+      <div class="hint" style="margin-bottom:10px;font-size:12px;color:#888">
+        เบอร์ -0 = ใหญ่พิเศษ → เบอร์ 6 = เล็กที่สุด | กรอก ถาด + ฟอง
+      </div>
+      <div class="size-grid" id="size-grid"></div>
+      <div class="pair-total" id="size-total" style="margin-top:10px">รวมเบอร์ทั้งหมด: 0 ฟอง</div>
+    </div>
+  </div>
+
+  <!-- ── 5. เหตุการณ์พิเศษ ── -->
+  <div class="section">
+    <div class="section-header">⚡ เหตุการณ์พิเศษวันนี้</div>
+    <div class="section-body">
+
+      <!-- 1. เปลี่ยนแกรบ (with note) -->
+      <div class="check-item">
+        <input type="checkbox" id="chk-bedding" onchange="toggleNote('bedding')">
+        <div style="width:100%">
+          <div class="check-label" onclick="document.getElementById('chk-bedding').click()">
+            🌾 เปลี่ยนแกรบ
+          </div>
+          <div class="note-field" id="note-bedding">
+            <input class="note-input" id="note-bedding-text"
+              type="text" placeholder="หมายเหตุ...">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ให้ยาถ่ายพยาธิ (NO note) -->
+      <div class="check-item">
+        <input type="checkbox" id="chk-deworm">
+        <div>
+          <div class="check-label" onclick="document.getElementById('chk-deworm').click()">
+            💊 ให้ยาถ่ายพยาธิ
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. วัคซีน (with note) -->
+      <div class="check-item">
+        <input type="checkbox" id="chk-vaccine" onchange="toggleNote('vaccine')">
+        <div style="width:100%">
+          <div class="check-label" onclick="document.getElementById('chk-vaccine').click()">
+            💉 วัคซีน
+          </div>
+          <div class="note-field" id="note-vaccine">
+            <input class="note-input" id="note-vaccine-text"
+              type="text" placeholder="ชนิดวัคซีน / หมายเหตุ...">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. ซ่อมแซม (with note) -->
+      <div class="check-item">
+        <input type="checkbox" id="chk-repair" onchange="toggleNote('repair')">
+        <div style="width:100%">
+          <div class="check-label" onclick="document.getElementById('chk-repair').click()">
+            🔧 ซ่อมแซมเล้า / อุปกรณ์
+          </div>
+          <div class="note-field" id="note-repair">
+            <input class="note-input" id="note-repair-text"
+              type="text" placeholder="รายละเอียดการซ่อม...">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 6. หมายเหตุทั่วไป ── -->
+  <div class="section">
+    <div class="section-header">📝 หมายเหตุทั่วไป</div>
+    <div class="section-body">
+      <div class="field">
+        <textarea id="f-note" placeholder="บันทึกเพิ่มเติม..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUBMIT ── -->
+  <button class="submit-btn" id="submit-btn" onclick="openReview()">
+    ตรวจสอบก่อนบันทึก →
+  </button>
+
+</div><!-- /form-body -->
+
+<!-- ════ MODAL REVIEW ════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-card">
+
+    <div class="modal-header">
+      <div class="modal-title">📋 ตรวจสอบข้อมูลก่อนบันทึก</div>
+      <div class="modal-subtitle" id="modal-coop-date">—</div>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-edit" onclick="closeReview()">✏️ แก้ไข</button>
+      <button class="btn-confirm" id="btn-confirm" onclick="confirmSubmit()">
+        ✅ ยืนยันบันทึก
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ SUCCESS SCREEN ════ (moved here so overlay doesn't cover it) -->
+<div class="footer">MAMA FARM © 2569 | mamafarmth@gmail.com</div>
+
+<script>
+// ════════════════════════════════════════
+// CONFIG — แทนที่ URL ด้วย Apps Script Web App URL
+// ════════════════════════════════════════
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+const COOP_CONFIG = {
+  1: { name: 'คอก 1', breed: 'ไก่ไข่หลัก', count: 690 },
+  2: { name: 'คอก 2', breed: 'ไก่ไข่หลัก', count: 460 },
+  3: { name: 'คอก 3 (พิเศษ)', breed: 'Sussex', count: 190 },
+  4: { name: 'คอก 4', breed: 'Sussex', count: 75 },
+  5: { name: 'คอก 5', breed: 'ไก่ไข่หลัก', count: 438 },
+};
+
+const EGG_SIZES = ['-0','0','1','2','3','4','5','6'];
+
+let coopId = 1;
+let coopData = {};
+let pendingPayload = null; // เก็บ payload ระหว่างรอ confirm
+
+// ════ INIT ════
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  coopId = parseInt(params.get('coop') || 1);
+  coopData = COOP_CONFIG[coopId] || COOP_CONFIG[1];
+
+  document.getElementById('coop-badge').textContent = coopData.name;
+  document.title = `Mama Farm — ${coopData.name}`;
+  document.getElementById('f-current-count').value = coopData.count;
+
+  // วันที่วันนี้
+  const t = new Date();
+  const yyyy = t.getFullYear();
+  const mm = String(t.getMonth()+1).padStart(2,'0');
+  const dd = String(t.getDate()).padStart(2,'0');
+  document.getElementById('f-date').value = `${yyyy}-${mm}-${dd}`;
+
+  buildSizeGrid();
+  calcFoodCost();
+}
+
+// ════ EGG SIZE GRID ════
+function buildSizeGrid() {
+  const grid = document.getElementById('size-grid');
+  grid.innerHTML = EGG_SIZES.map(size => `
+    <div class="size-card">
+      <div class="size-badge">เบอร์ ${size}</div>
+      <div class="size-inputs">
+        <input type="number" min="0" placeholder="0"
+          id="size-${size}-tray" oninput="calcSizeTotal()"
+          style="font-size:13px;padding:5px 3px">
+        <input type="number" min="0" max="29" placeholder="0"
+          id="size-${size}-egg" oninput="calcSizeTotal()"
+          style="font-size:13px;padding:5px 3px">
+      </div>
+      <div class="size-sublabel">ถาด &nbsp; ฟอง</div>
+    </div>
+  `).join('');
+}
+
+// ════ CALCULATIONS ════
+function calcFoodCost() {
+  const am = parseFloat(document.getElementById('f-food-am').value) || 0;
+  const pm = parseFloat(document.getElementById('f-food-pm').value) || 0;
+  const price = parseFloat(document.getElementById('f-food-price').value) || 15.67;
+  const cost = (am + pm) * price;
+  document.getElementById('cost-display').textContent =
+    '฿ ' + cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function trayToEggs(tray, egg) {
+  return (parseInt(tray) || 0) * 30 + (parseInt(egg) || 0);
+}
+
+function calcEggs() {
+  const amEggs = trayToEggs(
+    document.getElementById('f-egg-am-tray').value,
+    document.getElementById('f-egg-am-egg').value
+  );
+  const pmEggs = trayToEggs(
+    document.getElementById('f-egg-pm-tray').value,
+    document.getElementById('f-egg-pm-egg').value
+  );
+  const broken = parseInt(document.getElementById('f-broken').value) || 0;
+  const total = amEggs + pmEggs;
+  const net = total - broken;
+  const chickens = parseInt(document.getElementById('f-current-count').value) || coopData.count;
+
+  const lriEl = document.getElementById('lri-display');
+  if (chickens > 0 && total > 0) {
+    const lri = (total / chickens * 100).toFixed(1);
+    lriEl.textContent = lri + '%';
+    if (lri >= 80)      lriEl.className = 'lri-value lri-good';
+    else if (lri >= 65) lriEl.className = 'lri-value lri-warn';
+    else                lriEl.className = 'lri-value lri-bad';
+    document.getElementById('lri-detail').textContent =
+      `${total.toLocaleString()} ÷ ${chickens} ตัว | สุทธิ ${net.toLocaleString()} ฟอง`;
+  } else {
+    lriEl.textContent = '—';
+    lriEl.className = 'lri-value';
+    document.getElementById('lri-detail').textContent = '—';
+  }
+}
+
+function calcSizeTotal() {
+  let total = 0;
+  EGG_SIZES.forEach(s => {
+    total += trayToEggs(
+      document.getElementById(`size-${s}-tray`)?.value,
+      document.getElementById(`size-${s}-egg`)?.value
+    );
+  });
+  document.getElementById('size-total').textContent =
+    `รวมเบอร์ทั้งหมด: ${total.toLocaleString()} ฟอง`;
+}
+
+function updateCount() {
+  const dead = parseInt(document.getElementById('f-dead').value) || 0;
+  const sold = document.getElementById('chk-sell').checked
+    ? (parseInt(document.getElementById('f-sold').value) || 0) : 0;
+  const cur = Math.max(0, coopData.count - dead - sold);
+  document.getElementById('f-current-count').value = cur;
+  calcEggs();
+}
+
+// ════ TOGGLE HELPERS ════
+function toggleNote(id) {
+  const el = document.getElementById(`note-${id}`);
+  if (el) el.classList.toggle('show', document.getElementById(`chk-${id}`).checked);
+}
+
+function toggleSell() {
+  const chk = document.getElementById('chk-sell');
+  document.getElementById('sell-section').classList.toggle('show', chk.checked);
+  updateCount();
+}
+
+// ════════════════════════════════════════
+// REVIEW MODAL
+// ════════════════════════════════════════
+function collectPayload() {
+  const amEggs = trayToEggs(
+    document.getElementById('f-egg-am-tray').value,
+    document.getElementById('f-egg-am-egg').value
+  );
+  const pmEggs = trayToEggs(
+    document.getElementById('f-egg-pm-tray').value,
+    document.getElementById('f-egg-pm-egg').value
+  );
+  const broken  = parseInt(document.getElementById('f-broken').value) || 0;
+  const total   = amEggs + pmEggs;
+  const net     = total - broken;
+  const dead    = parseInt(document.getElementById('f-dead').value) || 0;
+  const sold    = document.getElementById('chk-sell').checked
+    ? (parseInt(document.getElementById('f-sold').value) || 0) : 0;
+  const chickens = Math.max(0, coopData.count - dead - sold);
+  const foodAm  = parseFloat(document.getElementById('f-food-am').value) || 0;
+  const foodPm  = parseFloat(document.getElementById('f-food-pm').value) || 0;
+  const price   = parseFloat(document.getElementById('f-food-price').value) || 15.67;
+  const lri     = chickens > 0 ? (total / chickens * 100) : 0;
+
+  const sizes = {};
+  EGG_SIZES.forEach(s => {
+    sizes[`size_${s.replace('-','neg')}`] = trayToEggs(
+      document.getElementById(`size-${s}-tray`)?.value,
+      document.getElementById(`size-${s}-egg`)?.value
+    );
+  });
+
+  return {
+    coop: coopId,
+    coop_name: coopData.name,
+    date: document.getElementById('f-date').value,
+    dead,
+    sold,
+    chicken_count: chickens,
+    food_am: foodAm,
+    food_pm: foodPm,
+    food_price: price,
+    food_cost: (foodAm + foodPm) * price,
+    egg_am: amEggs,
+    egg_pm: pmEggs,
+    egg_total: total,
+    egg_broken: broken,
+    egg_net: net,
+    lri: lri.toFixed(2),
+    ...sizes,
+    event_bedding: document.getElementById('chk-bedding').checked ? 1 : 0,
+    note_bedding:  document.getElementById('note-bedding-text').value,
+    event_deworm:  document.getElementById('chk-deworm').checked ? 1 : 0,
+    event_vaccine: document.getElementById('chk-vaccine').checked ? 1 : 0,
+    note_vaccine:  document.getElementById('note-vaccine-text').value,
+    event_repair:  document.getElementById('chk-repair').checked ? 1 : 0,
+    note_repair:   document.getElementById('note-repair-text').value,
+    note:          document.getElementById('f-note').value,
+  };
+}
+
+function openReview() {
+  // Validate
+  const date   = document.getElementById('f-date').value;
+  const dead   = document.getElementById('f-dead').value;
+  const foodAm = document.getElementById('f-food-am').value;
+  const foodPm = document.getElementById('f-food-pm').value;
+  if (!date || dead === '' || !foodAm || !foodPm) {
+    alert('กรุณากรอกข้อมูลที่จำเป็นให้ครบ:\n• วันที่บันทึก\n• ไก่ตายวันนี้\n• อาหารเช้า และ อาหารเย็น');
+    return;
+  }
+
+  pendingPayload = collectPayload();
+  renderModal(pendingPayload);
+  document.getElementById('modal-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReview() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function renderModal(d) {
+  // Header date
+  const dateDisplay = d.date
+    ? new Date(d.date + 'T00:00:00').toLocaleDateString('th-TH', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      })
+    : d.date;
+  document.getElementById('modal-coop-date').textContent =
+    `${d.coop_name}  |  ${dateDisplay}`;
+
+  // LRI badge class
+  const lriNum = parseFloat(d.lri);
+  const lriClass = lriNum >= 80 ? 'good' : lriNum >= 65 ? 'warn' : 'bad';
+
+  // Egg sizes with value
+  const sizesWithValue = EGG_SIZES.filter(s =>
+    (d[`size_${s.replace('-','neg')}`] || 0) > 0
+  );
+
+  // Events
+  const events = [];
+  if (d.event_bedding) events.push(`🌾 เปลี่ยนแกรบ${d.note_bedding ? ` (${d.note_bedding})` : ''}`);
+  if (d.event_deworm)  events.push(`💊 ให้ยาถ่ายพยาธิ`);
+  if (d.event_vaccine) events.push(`💉 วัคซีน${d.note_vaccine ? ` (${d.note_vaccine})` : ''}`);
+  if (d.event_repair)  events.push(`🔧 ซ่อมแซม${d.note_repair ? ` (${d.note_repair})` : ''}`);
+
+  document.getElementById('modal-body').innerHTML = `
+
+    <!-- ไก่ -->
+    <div class="review-section">
+      <div class="review-section-title">🐔 ไก่</div>
+      <div class="review-row">
+        <span class="review-key">ไก่ในคอก (ต้นวัน)</span>
+        <span class="review-val">${coopData.count.toLocaleString()} ตัว</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">ตายวันนี้</span>
+        <span class="review-val${d.dead > 0 ? ' red' : ''}">
+          ${d.dead > 0 ? '−' + d.dead + ' ตัว' : '0 ตัว'}
+        </span>
+      </div>
+      ${d.sold > 0 ? `
+      <div class="review-row">
+        <span class="review-key">ขายออก</span>
+        <span class="review-val red">−${d.sold} ตัว</span>
+      </div>` : ''}
+      <div class="review-row">
+        <span class="review-key">คงเหลือ</span>
+        <span class="review-val highlight">${d.chicken_count.toLocaleString()} ตัว</span>
+      </div>
+    </div>
+
+    <!-- อาหาร -->
+    <div class="review-section">
+      <div class="review-section-title">🌾 อาหาร</div>
+      <div class="review-row">
+        <span class="review-key">อาหารเช้า</span>
+        <span class="review-val">${d.food_am} kg</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">อาหารเย็น</span>
+        <span class="review-val">${d.food_pm} kg</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">รวม</span>
+        <span class="review-val">${(d.food_am + d.food_pm).toFixed(1)} kg @ ฿${d.food_price}/kg</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">ต้นทุนอาหาร</span>
+        <span class="review-val gold">฿${d.food_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}</span>
+      </div>
+    </div>
+
+    <!-- ไข่ -->
+    <div class="review-section">
+      <div class="review-section-title">🥚 ไข่</div>
+      <div class="review-row">
+        <span class="review-key">ไข่เช้า</span>
+        <span class="review-val">${d.egg_am.toLocaleString()} ฟอง</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">ไข่เย็น</span>
+        <span class="review-val">${d.egg_pm.toLocaleString()} ฟอง</span>
+      </div>
+      <div class="review-row">
+        <span class="review-key">รวมทั้งหมด</span>
+        <span class="review-val highlight">${d.egg_total.toLocaleString()} ฟอง</span>
+      </div>
+      ${d.egg_broken > 0 ? `
+      <div class="review-row">
+        <span class="review-key">ฟองแตก / ร้าว</span>
+        <span class="review-val red">−${d.egg_broken} ฟอง</span>
+      </div>` : ''}
+      <div class="review-row">
+        <span class="review-key">ไข่สุทธิ</span>
+        <span class="review-val green">${d.egg_net.toLocaleString()} ฟอง</span>
+      </div>
+      <div class="review-row" style="margin-top:8px">
+        <span class="review-key">LRI วันนี้</span>
+        <span class="lri-badge ${lriClass}">${d.lri}%</span>
+      </div>
+    </div>
+
+    <!-- เบอร์ไข่ -->
+    ${sizesWithValue.length > 0 ? `
+    <div class="review-section">
+      <div class="review-section-title">📦 เบอร์ไข่</div>
+      ${sizesWithValue.map(s => `
+        <div class="review-row">
+          <span class="review-key">เบอร์ ${s}</span>
+          <span class="review-val">${(d[`size_${s.replace('-','neg')}`] || 0).toLocaleString()} ฟอง</span>
+        </div>
+      `).join('')}
+    </div>` : ''}
+
+    <!-- เหตุการณ์พิเศษ -->
+    ${events.length > 0 ? `
+    <div class="review-section">
+      <div class="review-section-title">⚡ เหตุการณ์พิเศษ</div>
+      <div class="event-tags">
+        ${events.map(e => `<span class="event-tag">${e}</span>`).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- หมายเหตุ -->
+    ${d.note ? `
+    <div class="review-section">
+      <div class="review-section-title">📝 หมายเหตุ</div>
+      <div style="font-size:14px;color:#555;line-height:1.5">${d.note}</div>
+    </div>` : ''}
+  `;
+}
+
+// ════ CONFIRM & SEND ════
+async function confirmSubmit() {
+  const btn = document.getElementById('btn-confirm');
+  btn.disabled = true;
+  btn.textContent = '⏳ กำลังบันทึก...';
+
+  try {
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      // Demo mode
+      await new Promise(r => setTimeout(r, 1200));
+    } else {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(pendingPayload),
+      });
+      if (!res.ok) throw new Error('Server error ' + res.status);
+    }
+
+    // Success
+    closeReview();
+    showSuccess(pendingPayload);
+
+  } catch(err) {
+    alert('เกิดข้อผิดพลาด กรุณาลองใหม่\n' + err.message);
+    btn.disabled = false;
+    btn.textContent = '✅ ยืนยันบันทึก';
+  }
+}
+
+function showSuccess(data) {
+  document.getElementById('main-form').style.display = 'none';
+  const sc = document.getElementById('success-screen');
+  sc.classList.add('show');
+  const lriNum = parseFloat(data.lri);
+  const lriEmoji = lriNum >= 80 ? '🟢' : lriNum >= 65 ? '🟡' : '🔴';
+  document.getElementById('success-detail').innerHTML =
+    `${data.coop_name} | ${data.date}<br>` +
+    `🥚 ไข่สุทธิ <strong>${data.egg_net.toLocaleString()}</strong> ฟอง<br>` +
+    `${lriEmoji} LRI <strong>${data.lri}%</strong><br>` +
+    `🌾 ต้นทุนอาหาร <strong>฿${data.food_cost.toFixed(2)}</strong>`;
+}
+
+// ════ RESET ════
+function resetForm() {
+  document.getElementById('success-screen').classList.remove('show');
+  document.getElementById('main-form').style.display = 'block';
+
+  document.getElementById('f-dead').value = '0';
+  document.getElementById('f-sold').value = '';
+  document.getElementById('f-food-am').value = '';
+  document.getElementById('f-food-pm').value = '';
+  document.getElementById('f-egg-am-tray').value = '';
+  document.getElementById('f-egg-am-egg').value = '';
+  document.getElementById('f-egg-pm-tray').value = '';
+  document.getElementById('f-egg-pm-egg').value = '';
+  document.getElementById('f-broken').value = '0';
+  document.getElementById('f-note').value = '';
+
+  ['bedding','vaccine','repair'].forEach(id => {
+    document.getElementById(`chk-${id}`).checked = false;
+    const note = document.getElementById(`note-${id}`);
+    if (note) note.classList.remove('show');
+  });
+  document.getElementById('chk-deworm').checked = false;
+  document.getElementById('chk-sell').checked = false;
+  document.getElementById('sell-section').classList.remove('show');
+
+  document.getElementById('btn-confirm').disabled = false;
+  document.getElementById('btn-confirm').textContent = '✅ ยืนยันบันทึก';
+
+  buildSizeGrid();
+  updateCount();
+  calcFoodCost();
+  calcEggs();
+  calcSizeTotal();
+  pendingPayload = null;
+}
+
+// ════ CLOSE MODAL ON OVERLAY CLICK ════
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReview();
+});
+
+// ════ START ════
+init();
+</script>
+</body>
+</html>
