@@ -904,6 +904,9 @@ function renderCharts(tab) {
       }
     });
 
+  }
+
+  if (tab === 'coops') {
     // ── Daily line charts per coop ──────────────────────────
     const junDates = JUN_RAW.map(r => r[0]);
     const l1Daily = JUN_RAW.map(r => toEggs(r[1]));
